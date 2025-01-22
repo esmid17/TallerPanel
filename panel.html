@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control Interactivo con Eventos en JS</title>
+    <style>
+        body {
+            background-color:rgb(161, 250, 253);
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #configPanel {
+            display: none;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5%;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkred;
+        }
+        h1, h2, label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="titulo">Título de la Página</h1>
+
+    <button id="btnMostrarPanel">Mostrar Panel</button>
+
+    <div id="configPanel">
+        <h2>Panel de Configuración</h2>
+
+        <label for="cambiarTema">Cambiar Tema:</label>
+        <select id="cambiarTema">
+            <option value="white">Claro</option>
+            <option value="black">Oscuro</option>
+            <option value="blue">Azul</option>
+        </select>
+
+        <br>
+        <br>
+
+        <label for="cambiarTitulo">Actualizar Título:</label>
+        <input type="text" id="cambiarTitulo" placeholder="Escribe un nuevo título">
+
+        <br>
+        <br>
+
+        <label for="mostrarComentarios">Habilitar Área de Comentarios:</label>
+        <input type="checkbox" id="mostrarComentarios">
+
+        <br>
+        <br>
+
+        <textarea id="comentarios" placeholder="Escribe tu comentario" disabled></textarea>
+
+        <br>
+        <br>
+
+        <label for="agregarElemento">Agregar Elemento:</label>
+        <input type="text" id="agregarElemento" placeholder="Nuevo elemento">
+        <button id="btnAgregarElemento">Agregar</button>
+
+        <ul id="listaElementos">
+            <li>Laptop</li>
+            <li>Teclado</li>
+        </ul>
+    </div>
+
+    <script>
+        const btnMostrarPanel = document.getElementById('btnMostrarPanel');
+        const configPanel = document.getElementById('configPanel');
+        const cambiarTema = document.getElementById('cambiarTema');
+        const cambiarTitulo = document.getElementById('cambiarTitulo');
+        const titulo = document.getElementById('titulo');
+        const mostrarComentarios = document.getElementById('mostrarComentarios');
+        const comentarios = document.getElementById('comentarios');
+        const agregarElemento = document.getElementById('agregarElemento');
+        const btnAgregarElemento = document.getElementById('btnAgregarElemento');
+        const listaElementos = document.getElementById('listaElementos');
+
+        btnMostrarPanel.addEventListener('click', () => {
+            if (configPanel.style.display === 'none' || configPanel.style.display === '') {
+                configPanel.style.display = 'block';
+                btnMostrarPanel.textContent = 'Ocultar Panel';
+            } else {
+                configPanel.style.display = 'none';
+                btnMostrarPanel.textContent = 'Mostrar Panel';
+            }
+        });
+
+        cambiarTema.addEventListener('change', (event) => {
+            document.body.style.backgroundColor = event.target.value;
+        });
+
+        cambiarTitulo.addEventListener('input', (event) => {
+            titulo.textContent = event.target.value || 'Panel';
+        });
+
+        mostrarComentarios.addEventListener('change', (event) => {
+            comentarios.disabled = !event.target.checked;
+        });
+
+        btnAgregarElemento.addEventListener('click', () => {
+            const newItemText = agregarElemento.value.trim();
+            if (newItemText) {
+                const newItem = document.createElement('li');
+                newItem.textContent = newItemText;
+                listaElementos.appendChild(newItem);
+                agregarElemento.value = '';
+            }
+        });
+
+        listaElementos.addEventListener('click', (event) => {
+            if (event.target.tagName === 'LI') {
+                event.target.remove();
+            }
+        });
+    </script>
+</body>
+</html>
